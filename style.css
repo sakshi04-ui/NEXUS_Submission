@@ -1,0 +1,741 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+/* Basic Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    padding-top: 50px; /* Ensure content doesn't overlap the fixed navbar */
+}
+
+h1 {
+    margin: 0;
+}
+
+/* Header + hamburger navigation bar */
+.header-background {
+    background-color: #333;
+    padding: 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure it is above other content */
+}
+
+.heading {
+    font-size: 24px;
+}
+
+/* Hamburger icon */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.hamburger span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+    transition: 0.4s ease-in-out;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Fade and slide in effect for navigation menu */
+.nav-menu {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.nav-menu li {
+    position: relative;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    position: relative;
+    padding: 10px;
+    transition: color 0.4s ease, background-color 0.4s ease;
+    z-index: 1;
+}
+
+/* Yellow box animation */
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(69, 69, 67);
+    z-index: -1;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.nav-menu a:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+.nav-menu a.active::after {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    background-color: #444;
+    top: 100%;
+    left: 0;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+    transform: translateY(-10px); /* Added slight slide-in */
+}
+
+.nav-menu li:hover .dropdown {
+    display: block;
+    opacity: 1;
+    transform: translateY(0); /* Animate dropdown sliding down */
+}
+
+.dropdown a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+}
+
+.dropdown a:hover {
+    background-color: #555;
+}
+
+/* Responsive hamburger menu for smaller screens */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex; /* Show hamburger on small screens */
+    }
+
+    /* Navigation Menu Adjustments */
+.nav-menu {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    padding-right: 20px; /* Add padding to the right to prevent last item from being clipped */
+}
+
+.nav-menu li {
+    position: relative;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    position: relative;
+    padding: 10px 15px; /* Add padding for spacing */
+    transition: color 0.4s ease, background-color 0.4s ease;
+    z-index: 1;
+}
+}
+
+/* Responsive Fix for Small Screens */
+@media (max-width: 768px) {
+    .nav-menu {
+        flex-direction: column;
+        padding: 20px; /* Add padding to prevent clipping */
+    }
+
+    .nav-menu li {
+        margin-bottom: 20px; /* Add spacing between items */
+    }
+}
+
+
+
+/* Hero Section */
+.hero {
+    position: relative;
+    background: url('./image.png') center center / cover no-repeat; /* Ensure the image covers the entire container */
+    width: 100vw; /* Full width of the viewport */
+    height: 100vh; /* Full height of the viewport */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.4); /* Dark overlay */
+    overflow: hidden;
+    z-index: 1; /* Ensure navbar is above the hero */
+}
+
+
+
+.hero-content {
+    z-index: 1;
+    max-width: 80%; /* Limit width for better text readability */
+}
+
+.text-reveal {
+    opacity: 0; /* Start hidden */
+    transform: translateY(-30px); /* Slide down from above */
+    animation: textRevealOnLoad 1s ease-out forwards; /* Reveal animation */
+}
+
+.text-reveal:nth-child(1) {
+    animation-delay: 0.2s; /* Delay for the heading */
+}
+
+.text-reveal:nth-child(2) {
+    animation-delay: 0.4s; /* Delay for the paragraph */
+}
+
+.btn-reveal {
+    opacity: 0; /* Start hidden */
+    transform: translateY(30px); /* Slide up from below */
+    animation: buttonRevealOnLoad 1s ease-out forwards; /* Reveal animation */
+    animation-delay: 0.6s; /* Delay for the button */
+}
+
+@keyframes textRevealOnLoad {
+    from {
+        opacity: 0;
+        transform: translateY(-30px); /* Start from above */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* End at original position */
+    }
+}
+
+@keyframes buttonRevealOnLoad {
+    from {
+        opacity: 0;
+        transform: translateY(30px); /* Start from below */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* End at original position */
+    }
+}
+
+.hero h2 {
+    font-size: 48px; /* Larger heading */
+    font-weight: bold;
+    margin: 0;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.hero p {
+    font-size: 20px;
+    margin: 15px 0;
+    line-height: 1.6;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.hero .btn {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background-color: #3268d2;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.hero .btn:hover {
+    background-color: #bdcedd;
+    transform: scale(1.05);
+}
+
+
+
+
+/* General Section Styles */
+section:not(#home) {
+    margin: 20px auto; /* Center the section */
+    width: 90%; /* Responsive width */
+    padding: 20px; /* Inner spacing */
+    background-color: #f4f4f9; /* Subtle background */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth hover effect */
+    box-sizing: border-box; /* Include padding in width calculations */
+}
+
+section:not(#home):hover {
+    transform: scale(1.02); /* Slight zoom effect */
+    background-color: #f0f8ff; /* Highlighted color */
+}
+
+section:not(#home) h2,
+section:not(#home) p,
+section:not(#home) ul {
+    margin: 0; /* Avoid unnecessary gaps */
+    padding: 0; /* Keep text within the section */
+    color: black;
+}
+
+section:not(#home) h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+section:not(#home) p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-align: justify; /* Clean text flow */
+}
+
+section:not(#home) ul {
+    margin-top: 15px;
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+section:not(#home) ul li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+#home {
+    margin: 0;
+}
+
+/* Section-Specific Styles */
+#java,
+#cpp,
+#python {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Programming Content */
+.programming-content-container {
+    display: flex;
+    justify-content: space-between; /* Ensure strict left-right alignment */
+    align-items: center;
+    gap: 20px;
+}
+
+.programming-content {
+    flex: 2;
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.programming-image img {
+    flex: 1;
+    width: 350px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeInRight 1s ease-in-out; /* Fade-in for image */
+}
+
+/* Fade-in Animation */
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+/* HTML Module */
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+/* Common Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 16px; /* Ensures readability */
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #333;
+}
+
+.table-container {
+    overflow: hidden; /* Prevent overflow during animation */
+}
+
+/* Row Styling and Animation */
+table tr {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: tableRowFadeIn 0.5s ease-out forwards;
+}
+
+table tr:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+table tr:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+table tr:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+table tr:nth-child(4) {
+    animation-delay: 0.8s;
+}
+
+table tr:nth-child(5) {
+    animation-delay: 1s;
+}
+
+table tr:nth-child(6) {
+    animation-delay: 1.2s;
+}
+
+table tr:nth-child(7) {
+    animation-delay: 1.4s;
+}
+
+table tr:nth-child(8) {
+    animation-delay: 1.6s;
+}
+
+table tr:nth-child(9) {
+    animation-delay: 1.8s;
+}
+
+@keyframes tableRowFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Course section */
+.course-section {
+    padding: 20px;
+}
+
+.course-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.course-item {
+    display: flex;
+    margin-bottom: 30px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.course-info {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.course-title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.course-description {
+    font-size: 1em;
+    margin-top: 10px;
+}
+
+.course-video {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+iframe {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Optional Alternating Row Colors */
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1; /* Highlight on hover */
+}
+
+/* Layout Styles */
+.content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.text-content {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.image-content {
+    flex: 1;
+    text-align: right;
+}
+
+.image-content img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Table Styling */
+.table-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: auto;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+/* Animation Styles */
+.fade-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    animation: fadeInLeft 1s ease-out forwards;
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Footer Section */
+
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%);
+  }
+.container{
+    max-width: 800px;
+    background: #fff;
+    width: 800px;
+    padding: 25px 40px 10px 40px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  }
+  .container .text{
+    text-align: center;
+    font-size: 41px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    background: -webkit-linear-gradient(right, #56d8e4, #9f01ea, #56d8e4, #9f01ea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .container form{
+    padding: 30px 0 0 0;
+  }
+  .container form .form-row{
+    display: flex;
+    margin: 32px 0;
+  }
+  form .form-row .input-data{
+    width: 100%;
+    height: 40px;
+    margin: 0 20px;
+    position: relative;
+  }
+  form .form-row .textarea{
+    height: 70px;
+  }
+  .input-data input,
+  .textarea textarea{
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 17px;
+    border-bottom: 2px solid rgba(0,0,0, 0.12);
+  }
+  .input-data input:focus ~ label, .textarea textarea:focus ~ label,
+  .input-data input:valid ~ label, .textarea textarea:valid ~ label{
+    transform: translateY(-20px);
+    font-size: 14px;
+    color: #3498db;
+  }
+  .textarea textarea{
+    resize: none;
+    padding-top: 10px;
+  }
+  .input-data label{
+    position: absolute;
+    pointer-events: none;
+    bottom: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  .textarea label{
+    width: 100%;
+    bottom: 40px;
+    background: #fff;
+  }
+  .input-data .underline{
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+  }
+  .input-data .underline:before{
+    position: absolute;
+    content: "";
+    height: 2px;
+    width: 100%;
+    background: #3498db;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+  }
+  .input-data input:focus ~ .underline:before,
+  .input-data input:valid ~ .underline:before,
+  .textarea textarea:focus ~ .underline:before,
+  .textarea textarea:valid ~ .underline:before{
+    transform: scale(1);
+  }
+  .submit-btn .input-data{
+    overflow: hidden;
+    height: 45px!important;
+    width: 25%!important;
+  }
+  .submit-btn .input-data .inner{
+    height: 100%;
+    width: 300%;
+    position: absolute;
+    left: -100%;
+    background: -webkit-linear-gradient(right, #56d8e4, #9f01ea, #56d8e4, #9f01ea);
+    transition: all 0.4s;
+  }
+  .submit-btn .input-data:hover .inner{
+    left: 0;
+  }
+  .submit-btn .input-data input{
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+  }
+  @media (max-width: 700px) {
+    .container .text{
+      font-size: 30px;
+    }
+    .container form{
+      padding: 10px 0 0 0;
+    }
+    .container form .form-row{
+      display: block;
+    }
+    form .form-row .input-data{
+      margin: 35px 0!important;
+    }
+    .submit-btn .input-data{
+      width: 40%!important;
+    }
+  }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    input, textarea, button {
+        width: 100%;
+    }
+}
+
+
